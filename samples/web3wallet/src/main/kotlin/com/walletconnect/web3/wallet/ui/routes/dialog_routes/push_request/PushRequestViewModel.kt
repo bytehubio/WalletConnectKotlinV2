@@ -2,8 +2,6 @@ package com.walletconnect.web3.wallet.ui.routes.dialog_routes.push_request
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.google.firebase.crashlytics.ktx.crashlytics
-import com.google.firebase.ktx.Firebase
 import com.walletconnect.push.common.Push
 import com.walletconnect.push.wallet.client.PushWalletClient
 import com.walletconnect.sample_common.tag
@@ -23,7 +21,6 @@ class PushRequestViewModel : ViewModel() {
             },
             onError = { error ->
                 Log.e(tag(this), error.throwable.stackTraceToString())
-                Firebase.crashlytics.recordException(error.throwable)
                 navigateBack()
             }
         )
@@ -40,7 +37,6 @@ class PushRequestViewModel : ViewModel() {
             },
             onError = { error ->
                 Log.e(tag(this), error.throwable.stackTraceToString())
-                Firebase.crashlytics.recordException(error.throwable)
                 navigateBack()
             }
         )

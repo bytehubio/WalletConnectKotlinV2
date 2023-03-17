@@ -3,8 +3,6 @@ package com.walletconnect.web3.wallet.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.crashlytics.ktx.crashlytics
-import com.google.firebase.ktx.Firebase
 import com.walletconnect.push.common.Push
 import com.walletconnect.web3.wallet.client.Wallet
 import com.walletconnect.web3.wallet.client.Web3Wallet
@@ -66,6 +64,8 @@ class Web3WalletViewModel : ViewModel() {
 
     fun pair(pairingUri: String) {
         val pairingParams = Wallet.Params.Pair(pairingUri)
-        Web3Wallet.pair(pairingParams) { error -> Firebase.crashlytics.recordException(error.throwable) }
+        Web3Wallet.pair(pairingParams) { error ->
+
+        }
     }
 }

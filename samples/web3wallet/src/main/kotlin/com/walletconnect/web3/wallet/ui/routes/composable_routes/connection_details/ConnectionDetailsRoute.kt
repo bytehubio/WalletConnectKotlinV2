@@ -31,8 +31,6 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
-import com.google.firebase.crashlytics.ktx.crashlytics
-import com.google.firebase.ktx.Firebase
 import com.skydoves.landscapist.glide.GlideImage
 import com.walletconnect.web3.wallet.domain.accounts
 import com.walletconnect.web3.wallet.ui.common.*
@@ -62,7 +60,6 @@ fun ConnectionDetailsRoute(navController: NavController, connectionId: Int?, con
                         val event = getAllEventsByChainId(connectionUI.type.namespaces.values.first(), account).first()
 
                         Web3Wallet.emitSessionEvent(Wallet.Params.SessionEmit(connectionUI.type.topic, event = Wallet.Model.SessionEvent(event, "someData"), chainId)) {
-                            Firebase.crashlytics.recordException(it.throwable)
                             navController.showSnackbar("Event emit error. Check logs")
                         }
                         navController.showSnackbar("Event emitted")
@@ -76,7 +73,7 @@ fun ConnectionDetailsRoute(navController: NavController, connectionId: Int?, con
                 when (connectionUI.type) {
                     is ConnectionType.Sign -> {
                         Web3Wallet.disconnectSession(Wallet.Params.SessionDisconnect(connectionUI.type.topic)) { error ->
-                            Firebase.crashlytics.recordException(error.throwable)
+
                         }
                         connectionsViewModel.refreshConnections()
                         navController.popBackStack()

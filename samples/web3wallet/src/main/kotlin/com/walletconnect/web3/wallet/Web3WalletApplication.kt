@@ -2,9 +2,6 @@ package com.walletconnect.web3.wallet
 
 import android.app.Application
 import android.util.Log
-import com.google.firebase.crashlytics.ktx.crashlytics
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.FirebaseMessaging
 import com.walletconnect.android.Core
 import com.walletconnect.android.CoreClient
 import com.walletconnect.android.relay.ConnectionType
@@ -19,7 +16,7 @@ class Web3WalletApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        val projectId = BuildConfig.PROJECT_ID
+        val projectId = "f156aeb97cc8145f8c5e06f10bd808ed"
         val relayUrl = "relay.walletconnect.com"
         val serverUrl = "wss://$relayUrl?projectId=${projectId}"
         val appMetaData = Core.Model.AppMetaData(
@@ -36,22 +33,14 @@ class Web3WalletApplication : Application() {
             application = this,
             metaData = appMetaData
         ) { error ->
-            Firebase.crashlytics.recordException(error.throwable)
+
         }
 
         Web3Wallet.initialize(Wallet.Params.Init(core = CoreClient)) { error ->
-            Firebase.crashlytics.recordException(error.throwable)
         }
 
         PushWalletClient.initialize(Push.Wallet.Params.Init(CoreClient)) { error ->
             Log.e(tag(this), error.throwable.stackTraceToString())
-        }
-
-        // For testing purposes only
-        FirebaseMessaging.getInstance().deleteToken().addOnSuccessListener {
-            FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
-                Log.d(tag(this), token)
-            }
         }
     }
 }

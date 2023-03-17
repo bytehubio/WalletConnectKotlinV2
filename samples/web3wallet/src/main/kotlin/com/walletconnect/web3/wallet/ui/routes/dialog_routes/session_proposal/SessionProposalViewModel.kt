@@ -1,12 +1,9 @@
 package com.walletconnect.web3.wallet.ui.routes.dialog_routes.session_proposal
 
 import androidx.lifecycle.ViewModel
-import com.google.firebase.crashlytics.ktx.crashlytics
-import com.google.firebase.ktx.Firebase
 import com.walletconnect.sample_common.Chains
 import com.walletconnect.web3.wallet.client.Wallet
 import com.walletconnect.web3.wallet.client.Web3Wallet
-import com.walletconnect.web3.wallet.domain.WCDelegate
 import com.walletconnect.web3.wallet.domain.accounts
 import com.walletconnect.web3.wallet.ui.common.peer.PeerUI
 
@@ -90,7 +87,7 @@ class SessionProposalViewModel : ViewModel() {
             )
 
             Web3Wallet.approveSession(approveProposal) { error ->
-                Firebase.crashlytics.recordException(error.throwable)
+
             }
         }
     }
@@ -104,7 +101,7 @@ class SessionProposalViewModel : ViewModel() {
             )
 
             Web3Wallet.rejectSession(reject) { error ->
-                Firebase.crashlytics.recordException(error.throwable)
+
             }
         }
     }
